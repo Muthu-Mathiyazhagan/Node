@@ -16,7 +16,12 @@ app.get('/api/post/:year/:month/:date', (req, res) => {
 
     res.send(req.params);
 });
-
+//  Below GET Request read QUERY Parameter Object and Return the Same
+//  request  : http://localhost:3000/api/posts/2018/04/29?sortBy=name
+//  response : {"sortBy":"name"}
+app.get('/api/posts/:year/:month/:date', (req, res) => {
+    res.send(req.query);
+});
 
 
 
