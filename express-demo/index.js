@@ -11,6 +11,19 @@ const courses = [
     { id: 4, name: 'N-Node JS' }
 ];
 
+app.delete('/api/courses/:id', (req, res) => {
+    // Look Up for the ID Or return 404
+    const course = courses.find(c => c.id === parseInt(req.params.id));
+    if (!course) res.status(404).send('The Course with given ID was not found.!');
+    // Delete
+    const index = courses.indexOf(course);
+    courses.splice(index, 1);
+
+    // return Deleted Data
+    res.send(course);
+
+})
+
 app.put('/api/courses/:id', (req, res) => {
 
     const course = courses.find(c => c.id === parseInt(req.params.id));
