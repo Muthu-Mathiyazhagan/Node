@@ -1,5 +1,7 @@
 const express = require('express'); // It will return a function
 const app = express();
+app.use(express.json());
+
 const courses = [
     { id: 1, name: 'M-Mongo' },
     { id: 2, name: 'E-Express' },
@@ -13,6 +15,14 @@ app.get('/', (req, res) => {
 
 app.get('/api/courses', (req, res) => {
     res.send(courses);
+});
+
+// Get a course details using Route Parameter ID
+app.get('/api/courses/:id', (req, res) => {
+
+
+    res.send(JSON.stringify(course));
+
 });
 
 
