@@ -1,5 +1,7 @@
 const express = require('express'); // It will return a function
+const Joi = require('joi');
 const app = express();
+// const Joi = require('joi');
 app.use(express.json());
 const courses = [
     { id: 1, name: 'M-Mongo' },
@@ -16,8 +18,28 @@ app.get('/api/courses', (req, res) => {
     res.send(courses);
 });
 
-// @ Aashiq
 app.post('/api/courses', (req, res) => {
+
+    // Input Validation Using JOI Class Module
+
+    const schema = Joi.object({
+        name: Joi.string().min(3).required()
+
+    });
+    const result = schema.validate({ name: req.body.name });
+
+    if (result.error) {
+        res.send(result.error.details[0].message);
+        return;
+    }
+
+
+    //  Manual Input Validation
+    if (!req.body.name || req.body.name.length < 3) {
+        res.status(400).send('Name is Required AND Name must be 3 length');
+        return;
+
+    }
     const course = {
         id: courses.length + 1,
         name: req.body.name
