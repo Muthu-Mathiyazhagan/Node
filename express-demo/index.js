@@ -11,6 +11,31 @@ const courses = [
     { id: 4, name: 'N-Node JS' }
 ];
 
+app.put('/api/courses/:id', (req, res) => {
+
+    const course = courses.find(c => c.id === parseInt(req.params.id));
+    if (!course) res.status(404).send('The Course with given ID was not found.!');
+
+    // Input Validation Using JOI Class Module
+
+    const schema = Joi.object({
+        name: Joi.string().min(3).required()
+
+    });
+    const result = schema.validate({ name: req.body.name });
+
+    if (result.error) {
+        res.send(result.error.details[0].message);
+        return;
+    }
+
+    course.name = req.body.name;
+    res.send(course);
+
+
+
+})
+
 app.get('/', (req, res) => {
     res.send('Hello world.! using Node Monitor');
 });
