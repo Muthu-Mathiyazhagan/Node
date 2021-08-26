@@ -1,8 +1,21 @@
 const express = require('express'); // It will return a function
+const app = express();
+const courses = [
+    { id: 1, name: 'M-Mongo' },
+    { id: 2, name: 'E-Express' },
+    { id: 3, name: 'R-React JS' },
+    { id: 4, name: 'N-Node JS' }
+];
 
 app.get('/', (req, res) => {
     res.send('Hello world.! using Node Monitor');
 });
+
+app.get('/api/courses', (req, res) => {
+    res.send(courses);
+});
+
+
 
 //  Below GET Request read route Parameter and Return the Same
 app.get('/api/courses/:id', (req, res) => {
