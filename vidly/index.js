@@ -5,6 +5,7 @@ const Joi = require('joi'); // Joi will return a Class. So, We are Using Pascal 
 app.use(express.json()); // This is a method inbuilt in express to recognize the incoming Request Object as a JSON Object. This method is called as a middleware in your application using the code
 
 // Setting ENV port as 3000 and Listening to 3000
+// Reading the port from an environment variable
 const port = process.env.PORT || 3000;
 app.listen(port, () => console.log(`Listening on port # ${port}...`));
 
