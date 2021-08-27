@@ -14,7 +14,7 @@ const courses = [
 app.delete('/api/courses/:id', (req, res) => {
     // Look Up for the ID Or return 404
     const course = courses.find(c => c.id === parseInt(req.params.id));
-    if (!course) res.status(404).send('The Course with given ID was not found.!');
+    if (!course) return res.status(404).send('The Course with given ID was not found.!');
     // Delete
     const index = courses.indexOf(course);
     courses.splice(index, 1);
@@ -31,16 +31,9 @@ app.put('/api/courses/:id', (req, res) => {
 
     // Input Validation Using JOI Class Module
 
-    const schema = Joi.object({
-        name: Joi.string().min(3).required()
+    const { error } = validateCourse(req.body);
 
-    });
-    const result = schema.validate({ name: req.body.name });
-
-    if (result.error) {
-        res.send(result.error.details[0].message);
-        return;
-    }
+    if (error) return res.send(error.details[0].message);
 
     course.name = req.body.name;
     res.send(course);
@@ -61,7 +54,7 @@ app.get('/api/courses', (req, res) => {
 app.get('/api/courses/:id', (req, res) => {
 
     const course = courses.find(c => c.id === parseInt(req.params.id));
-    if (!course) res.status(404).send('The Course with given ID was not found.!');
+    if (!course) return res.status(404).send('The Course with given ID was not found.!');
 
     res.send(JSON.stringify(course));
 
@@ -71,16 +64,9 @@ app.post('/api/courses', (req, res) => {
 
     // Input Validation Using JOI Class Module
 
-    const schema = Joi.object({
-        name: Joi.string().min(3).required()
+    const { error } = validateCourse(req.body);
 
-    });
-    const result = schema.validate({ name: req.body.name });
-
-    if (result.error) {
-        res.send(result.error.details[0].message);
-        return;
-    }
+    if (error) return res.send(error.details[0].message);
 
 
     //  Manual Input Validation
@@ -97,6 +83,16 @@ app.post('/api/courses', (req, res) => {
     courses.push(course);
     res.send(course);
 });
+
+function validateCourse(course) {
+    const schema = Joi.object({
+        name: Joi.string().min(3).required().alphanum().case('lower')
+
+    });
+    return schema.validate({ name: course.name });
+}
+
+
 
 
 //  Below GET Request read route Parameter and Return the Same
