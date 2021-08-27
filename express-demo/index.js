@@ -62,7 +62,7 @@ app.get('/api/courses/:id', (req, res) => {
 
 app.post('/api/courses', (req, res) => {
 
-    // Input Validation Using JOI Class Module
+    // Input Validation Using JOI Class Module  //validateCourse()
 
     const { error } = validateCourse(req.body);
 
