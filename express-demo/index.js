@@ -3,7 +3,7 @@ const app = express();
 const Joi = require('joi');
 
 app.use(express.json());
-
+app.use(express.static('public'));
 const courses = [
     { id: 1, name: 'M-Mongo' },
     { id: 2, name: 'E-Express' },
