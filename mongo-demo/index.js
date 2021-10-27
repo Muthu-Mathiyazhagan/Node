@@ -36,9 +36,11 @@ async function getCourses() {
         .select({ name: -1 });
 
     console.log(course);
+
 }
 
 getCourses();
+
 // createCourse();
 
 
